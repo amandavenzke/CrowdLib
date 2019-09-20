@@ -1,10 +1,8 @@
 package com.crowdlib.api.config.property;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
-@ConfigurationProperties("crowdLib")
-@EnableConfigurationProperties(CrowdLibApiProperty.class)
+@ConfigurationProperties("crowdlib")
 public class CrowdLibApiProperty {
 
 	private String origemPermitida = "http://localhost:8000";
@@ -33,7 +31,7 @@ public class CrowdLibApiProperty {
 		private String accessKeyId;
 		private String secretKey;
 
-		private String bucket = "aw-crowdlib-aquivos";
+		private String bucket = "aw-crowdlib-arquivos";
 
 		public String getAccessKeyId() {
 			return accessKeyId;

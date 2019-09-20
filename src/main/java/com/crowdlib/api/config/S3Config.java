@@ -1,3 +1,4 @@
+
 package com.crowdlib.api.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.BucketLifecycleConfiguration;
@@ -28,6 +30,7 @@ public class S3Config {
 				crowdLibApiProperty.getS3().getSecretKey());
 
 		AmazonS3 amazonS3 = AmazonS3ClientBuilder.standard()
+				.withRegion(Regions.US_EAST_2)
 				.withCredentials(new AWSStaticCredentialsProvider(credenciais)).build();
 
 		if (!amazonS3.doesBucketExistV2(crowdLibApiProperty.getS3().getBucket())) {
@@ -36,8 +39,7 @@ public class S3Config {
 			BucketLifecycleConfiguration.Rule regraExpiracao = new BucketLifecycleConfiguration.Rule()
 					.withId("Regra de expiração de arquivos temporários")
 					.withFilter(new LifecycleFilter(new LifecycleTagPredicate(new Tag("expirar", "true"))))
-					.withExpirationInDays(1)
-					.withStatus(BucketLifecycleConfiguration.ENABLED);
+					.withExpirationInDays(1).withStatus(BucketLifecycleConfiguration.ENABLED);
 
 			BucketLifecycleConfiguration configuration = new BucketLifecycleConfiguration().withRules(regraExpiracao);
 

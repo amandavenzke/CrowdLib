@@ -15,7 +15,7 @@ import com.crowdlib.api.config.property.CrowdLibApiProperty;
 @RestController
 @RequestMapping("/tokens")
 public class TokenResource {
-	
+
 	@Autowired
 	private CrowdLibApiProperty crowdLibApiProperty;
 
