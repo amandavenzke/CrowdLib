@@ -1,10 +1,3 @@
-drop table crowdlib.schema_version;
-
-DROP TABLE IF EXISTS usuario;
-DROP TABLE IF EXISTS livro;
-DROP TABLE IF EXISTS lpermissao;
-DROP TABLE IF EXISTS lusuario_permissao;
-
 CREATE TABLE usuario (
 	id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(50) NOT NULL,
