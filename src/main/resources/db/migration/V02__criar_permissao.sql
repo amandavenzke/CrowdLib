@@ -3,4 +3,4 @@ INSERT INTO crowdlib.usuario (nome, sexo, data_nascimento, email, senha, logrado
 INSERT INTO crowdlib.PERMISSAO (descricao) VALUES ('ROLE_CADASTRAR_USUARIO');
 INSERT INTO crowdlib.usuario_permissao (id_usuario, id_permissao) VALUES (1, 1);
 
---TESTE
+--TESTE2
