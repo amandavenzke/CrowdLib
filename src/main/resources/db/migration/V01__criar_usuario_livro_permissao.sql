@@ -1,6 +1,4 @@
-DELETE FROM crowdlib.flyway_schema_history where installed_rank = '01';
-DELETE FROM crowdlib.flyway_schema_history where installed_rank = '02';
-DELETE FROM crowdlib.flyway_schema_history where installed_rank = '03';
+drop table crowdlib.schema_version;
 
 DROP TABLE IF EXISTS usuario;
 DROP TABLE IF EXISTS livro;
