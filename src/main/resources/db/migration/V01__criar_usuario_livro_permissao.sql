@@ -1,4 +1,4 @@
-drop table IF EXISTS crowdlib.schema_version;
+drop table IF EXISTS schema_version;
 
 CREATE TABLE usuario (
 	id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
