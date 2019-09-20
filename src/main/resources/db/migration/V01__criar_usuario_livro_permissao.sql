@@ -1,3 +1,12 @@
+DELETE FROM crowdlib.flyway_schema_history where installed_rank = '01';
+DELETE FROM crowdlib.flyway_schema_history where installed_rank = '02';
+DELETE FROM crowdlib.flyway_schema_history where installed_rank = '03';
+
+DROP TABLE IF EXISTS usuario;
+DROP TABLE IF EXISTS livro;
+DROP TABLE IF EXISTS lpermissao;
+DROP TABLE IF EXISTS lusuario_permissao;
+
 CREATE TABLE usuario (
 	id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(50) NOT NULL,
@@ -39,3 +48,8 @@ CREATE TABLE usuario_permissao (
 	FOREIGN KEY (id_usuario) REFERENCES usuario(id),
 	FOREIGN KEY (id_permissao) REFERENCES permissao(id)
 );
+
+INSERT INTO crowdlib.usuario (nome, sexo, data_nascimento, email, senha, logradouro, complemento, numero, bairro, cidade, estado, cep, celular) VALUES ('Amanda Venzke', 'FEMININO', '1991-05-30', 'patriciavenzke@gmail.com', '$2a$10$u.WjRhyOAsgnvYWUFA86W.ALODHF7u4IauJOO75ygF0RLm6IFliVy', 'Rua Jau', 'Bloco C Apto 71', '51', 'Santo Antonio',	'Osasco', 'SP',	'6126320','551198090987');
+
+INSERT INTO crowdlib.PERMISSAO (descricao) VALUES ('ROLE_CADASTRAR_USUARIO');
+INSERT INTO crowdlib.usuario_permissao (id_usuario, id_permissao) VALUES (1, 1);
