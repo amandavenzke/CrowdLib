@@ -1,4 +1,4 @@
-CREATE TABLE usuario (
+CREATE TABLE IF NOT EXISTS usuario (
 	id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(50) NOT NULL,
     sexo VARCHAR(10) NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE usuario (
 	celular VARCHAR(15)
 );
 
-CREATE TABLE livro (
+CREATE TABLE IF NOT EXISTS livro (
 	id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
     titulo VARCHAR(100) NOT NULL,
     descricao TEXT NOT NULL,
@@ -27,12 +27,12 @@ CREATE TABLE livro (
     conservacao VARCHAR(20) NOT NULL
 );
 
-CREATE TABLE permissao (
+CREATE TABLE IF NOT EXISTS permissao (
 	id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
 	descricao VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE usuario_permissao (
+CREATE TABLE IF NOT EXISTS usuario_permissao (
 	id_usuario BIGINT(20) NOT NULL,
 	id_permissao BIGINT(20) NOT NULL,
 	PRIMARY KEY (id_usuario, id_permissao),
