@@ -39,3 +39,4 @@ CREATE TABLE IF NOT EXISTS usuario_permissao (
 	FOREIGN KEY (id_usuario) REFERENCES usuario(id),
 	FOREIGN KEY (id_permissao) REFERENCES permissao(id)
 );
+
