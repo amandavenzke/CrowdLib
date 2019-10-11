@@ -15,16 +15,37 @@ CREATE TABLE IF NOT EXISTS usuario (
 	celular VARCHAR(15)
 );
 
+CREATE TABLE IF NOT EXISTS genero (
+	id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
+	descricao VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS idioma (
+	id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
+	descricao VARCHAR(50) NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS livro (
 	id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
+	id_genero BIGINT(20) NOT NULL,
+	id_idioma BIGINT(20) NOT NULL,
+	id_usuario BIGINT(20) NOT NULL,
     titulo VARCHAR(100) NOT NULL,
     descricao TEXT NOT NULL,
     edicao VARCHAR(50) NOT NULL,
-    isbn INT(15) NOT NULL,
+    isbn VARCHAR(15) NOT NULL,
     paginas INT(10) NOT NULL,
     editora VARCHAR(100) NOT NULL,
     autor VARCHAR(100) NOT NULL,  
-    conservacao VARCHAR(20) NOT NULL
+    conservacao VARCHAR(20) NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id),
+    FOREIGN KEY (id_genero) REFERENCES genero(id),
+    FOREIGN KEY (id_idioma) REFERENCES idioma(id)    
+);
+
+CREATE TABLE IF NOT EXISTS permissao (
+	id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
+	descricao VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS permissao (

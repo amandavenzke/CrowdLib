@@ -13,6 +13,7 @@ public class Permissao {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	private String descricao;
 
 	public Long getId() {

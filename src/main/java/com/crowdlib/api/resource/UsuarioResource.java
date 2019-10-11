@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +27,6 @@ import com.crowdlib.api.repository.UsuarioRepository;
 import com.crowdlib.api.service.UsuarioService;
 
 @RestController
-
 @RequestMapping("/usuarios")
 public class UsuarioResource {
 
@@ -47,7 +45,7 @@ public class UsuarioResource {
 	}
 
 	@PostMapping
-	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_USUARIO')")
+	//@PreAuthorize("hasAuthority('ROLE_CADASTRAR_USUARIO')")
 	public ResponseEntity<Usuario> criar(@Valid @RequestBody Usuario usuario, HttpServletResponse response) {
 		Usuario usuarioSalvo = usuarioRepository.save(usuario);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, usuarioSalvo.getId()));

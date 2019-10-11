@@ -1,11 +1,20 @@
 package com.crowdlib.api.model;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+@Entity
+@Table(name = "livro")
 public class Livro {
 
 	@Id
@@ -20,8 +29,17 @@ public class Livro {
 	@Size(max = 4000)
 	private String descricao;
 
-	@NotNull
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "id_usuario")
+	private Usuario usuario;
+	
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "id_genero")
 	private Genero genero;
+	
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "id_idioma")
+	private Idioma idioma;
 
 	@NotNull
 	@Size(max = 50)
@@ -32,7 +50,7 @@ public class Livro {
 	private String isbn;
 
 	@NotNull
-	@Size(max = 10)
+	// @Max(value = 10)
 	private int paginas;
 
 	@NotNull
@@ -44,11 +62,7 @@ public class Livro {
 	private String autor;
 
 	@NotNull
-	@Size(max = 9)
 	private Conservacao conservacao;
-
-	@NotNull
-	private Idioma idioma;
 
 	public Long getId() {
 		return id;
@@ -74,28 +88,12 @@ public class Livro {
 		this.descricao = descricao;
 	}
 
-	public Genero getGenero() {
-		return genero;
-	}
-
-	public void setGenero(Genero genero) {
-		this.genero = genero;
-	}
-
 	public String getEdicao() {
 		return edicao;
 	}
 
 	public void setEdicao(String edicao) {
 		this.edicao = edicao;
-	}
-
-	public String getIsbn() {
-		return isbn;
-	}
-
-	public void setIsb(String isbn) {
-		this.isbn = isbn;
 	}
 
 	public int getPaginas() {
@@ -129,6 +127,22 @@ public class Livro {
 	public void setConservacao(Conservacao conservacao) {
 		this.conservacao = conservacao;
 	}
+	
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public Genero getGenero() {
+		return genero;
+	}
+
+	public void setGenero(Genero genero) {
+		this.genero = genero;
+	}
 
 	public Idioma getIdioma() {
 		return idioma;
@@ -136,6 +150,14 @@ public class Livro {
 
 	public void setIdioma(Idioma idioma) {
 		this.idioma = idioma;
+	}
+
+	public String getIsbn() {
+		return isbn;
+	}
+
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
 	}
 
 	@Override
