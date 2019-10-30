@@ -160,6 +160,7 @@ public class Livro {
 		this.isbn = isbn;
 	}
 
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

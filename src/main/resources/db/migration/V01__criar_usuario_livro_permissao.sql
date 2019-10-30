@@ -15,6 +15,14 @@ CREATE TABLE IF NOT EXISTS usuario (
 	celular VARCHAR(15)
 );
 
+CREATE TABLE IF NOT EXISTS avaliacao (
+	id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
+	avaliacao BIGINT(5) NOT NULL,
+	comentario TEXT NOT NULL,
+	id_usuario BIGINT(20) NOT NULL,
+	FOREIGN KEY (id_usuario) REFERENCES usuario(id)	
+);
+
 CREATE TABLE IF NOT EXISTS genero (
 	id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
 	descricao VARCHAR(50) NOT NULL
@@ -43,9 +51,21 @@ CREATE TABLE IF NOT EXISTS livro (
     FOREIGN KEY (id_idioma) REFERENCES idioma(id)    
 );
 
-CREATE TABLE IF NOT EXISTS permissao (
+CREATE TABLE IF NOT EXISTS troca (
 	id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
-	descricao VARCHAR(50) NOT NULL
+	troca_realizada VARCHAR(1) NOT NULL,
+	id_usuario_solicitante BIGINT(20) NOT NULL,
+	id_usuario_solicitado BIGINT(20) NOT NULL,
+	FOREIGN KEY (id_usuario_solicitante) REFERENCES usuario(id),
+	FOREIGN KEY (id_usuario_solicitado) REFERENCES usuario(id)	
+);
+
+CREATE TABLE IF NOT EXISTS troca_livro (
+	id_troca BIGINT(20) NOT NULL,
+	id_livro BIGINT(20) NOT NULL,
+	PRIMARY KEY (id_troca, id_livro),
+	FOREIGN KEY (id_troca) REFERENCES troca(id),
+	FOREIGN KEY (id_livro) REFERENCES livro(id)
 );
 
 CREATE TABLE IF NOT EXISTS permissao (

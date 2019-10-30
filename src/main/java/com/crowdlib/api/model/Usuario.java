@@ -44,7 +44,6 @@ public class Usuario {
 	private LocalDate dataNascimento;
 
 	@NotNull
-	@Column(name = "senha")
 	private String senha;
 
 	@Embedded
@@ -52,10 +51,16 @@ public class Usuario {
 
 	@Embedded
 	private Endereco endereco;
+		
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+	private List<Avaliacao> avaliacoes;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "usuario_permissao", joinColumns = @JoinColumn(name = "id_usuario"), inverseJoinColumns = @JoinColumn(name = "id_permissao"))
 	private List<Permissao> permissoes;
+	
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+	private List<Livro> livros; 
 
 	public Long getId() {
 		return id;
@@ -113,7 +118,7 @@ public class Usuario {
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
-	
+
 	public List<Permissao> getPermissoes() {
 		return permissoes;
 	}
@@ -122,6 +127,22 @@ public class Usuario {
 		this.permissoes = permissoes;
 	}
 
+	public List<Avaliacao> getAvaliacoes() {
+		return avaliacoes;
+	}
+
+	public void setAvaliacoes(List<Avaliacao> avaliacoes) {
+		this.avaliacoes = avaliacoes;
+	}
+
+	public List<Livro> getLivros() {
+		return livros;
+	}
+
+	public void setLivros(List<Livro> livros) {
+		this.livros = livros;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

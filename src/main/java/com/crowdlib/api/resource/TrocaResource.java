@@ -22,81 +22,67 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.crowdlib.api.event.RecursoCriadoEvent;
-import com.crowdlib.api.model.Genero;
-import com.crowdlib.api.model.Idioma;
-import com.crowdlib.api.model.Livro;
+import com.crowdlib.api.model.Troca;
 import com.crowdlib.api.model.Usuario;
-import com.crowdlib.api.repository.GeneroRepository;
-import com.crowdlib.api.repository.IdiomaRepository;
-import com.crowdlib.api.repository.LivroRepository;
+import com.crowdlib.api.repository.TrocaRepository;
 import com.crowdlib.api.repository.UsuarioRepository;
-import com.crowdlib.api.service.LivroService;
+import com.crowdlib.api.service.TrocaService;
 
 @RestController
-@RequestMapping("/livros")
-public class LivroResource {
+@RequestMapping("/trocas")
+public class TrocaResource {
 
 	@Autowired
-	private LivroRepository livroRepository;
+	private TrocaRepository trocaRepository;
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
 	@Autowired
-	private GeneroRepository generoRepository;
-
-	@Autowired
-	private IdiomaRepository idiomaRepository;
-
-	@Autowired
-	private LivroService livroService;
+	private TrocaService trocaService;
 
 	@Autowired
 	private ApplicationEventPublisher publisher;
 
 	@GetMapping
-	public List<Livro> listar() {
-		return livroRepository.findAll();
+	public List<Troca> listar() {
+		return trocaRepository.findAll();
 	}
 
 	@PostMapping
-	public ResponseEntity<Livro> criar(@Valid @RequestBody Livro livro, HttpServletResponse response) {
-		Usuario usuario = this.usuarioRepository.findById(livro.getUsuario().getId())
+	public ResponseEntity<Troca> criar(@Valid @RequestBody Troca troca, HttpServletResponse response) {
+		Usuario usuarioSolicitante = this.usuarioRepository.findById(troca.getUsuarioSolicitante().getId())
 				.orElseThrow(() -> new EmptyResultDataAccessException(1));
 
-		Genero genero = this.generoRepository.findById(livro.getGenero().getId())
+		Usuario usuarioSolicitado = this.usuarioRepository.findById(troca.getUsuarioSolicitado().getId())
 				.orElseThrow(() -> new EmptyResultDataAccessException(1));
-
-		Idioma idioma = this.idiomaRepository.findById(livro.getIdioma().getId())
-				.orElseThrow(() -> new EmptyResultDataAccessException(1));
-
-		livro.setUsuario(usuario);
-		livro.setGenero(genero);
-		livro.setIdioma(idioma);
-
-		Livro livroSalvo = livroRepository.save(livro);
 		
-		publisher.publishEvent(new RecursoCriadoEvent(this, response, livroSalvo.getId()));
+		troca.setUsuarioSolicitante(usuarioSolicitante);
+		troca.setUsuarioSolicitado(usuarioSolicitado);
 
-		return ResponseEntity.status(HttpStatus.CREATED).body(livroSalvo);
+		Troca trocaSalva = trocaRepository.save(troca);
+
+		publisher.publishEvent(new RecursoCriadoEvent(this, response, trocaSalva.getId()));
+
+		return ResponseEntity.status(HttpStatus.CREATED).body(trocaSalva);
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity buscarPeloId(@Valid @PathVariable Long id) {
-		Optional livro = this.livroRepository.findById(id);
-		return livro.isPresent() ? ResponseEntity.ok(livro.get()) : ResponseEntity.notFound().build();
+		Optional troca = this.trocaRepository.findById(id);
+		return troca.isPresent() ? ResponseEntity.ok(troca.get()) : ResponseEntity.notFound().build();
 	}
 
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void remover(@PathVariable Long id) {
-		livroRepository.deleteById(id);
+		trocaRepository.deleteById(id);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Livro> atualizar(@PathVariable Long id, @Valid @RequestBody Livro livro) {
-		Livro livroSalvo = livroService.atualizar(id, livro);
-		return ResponseEntity.ok(livroSalvo);
+	public ResponseEntity<Troca> atualizar(@PathVariable Long id, @Valid @RequestBody Troca troca) {
+		Troca trocaSalva = trocaService.atualizar(id, troca);
+		return ResponseEntity.ok(trocaSalva);
 	}
 
 }
