@@ -50,13 +50,14 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
-		http.antMatcher("/usuarios")
+		http.antMatcher("/usuarios/**")
 			.addFilterBefore(this.basicAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
 			.authorizeRequests().anyRequest().authenticated()
 			.and()
-			.httpBasic();
+			.httpBasic()
+			.and().csrf().disable();
 	}
 
 }
