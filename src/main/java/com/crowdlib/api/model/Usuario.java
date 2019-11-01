@@ -16,7 +16,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -52,16 +51,19 @@ public class Usuario {
 	@Embedded
 	private Endereco endereco;
 		
-	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-	private List<Avaliacao> avaliacoes;
+	/*
+	 * @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL) private
+	 * List<Avaliacao> avaliacoes;
+	 */
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "usuario_permissao", joinColumns = @JoinColumn(name = "id_usuario"), inverseJoinColumns = @JoinColumn(name = "id_permissao"))
 	private List<Permissao> permissoes;
 	
-	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-	private List<Livro> livros; 
-
+	/*
+	 * @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL) private
+	 * List<Livro> livros;
+	 */
 	public Long getId() {
 		return id;
 	}
@@ -127,21 +129,18 @@ public class Usuario {
 		this.permissoes = permissoes;
 	}
 
-	public List<Avaliacao> getAvaliacoes() {
-		return avaliacoes;
-	}
+	/*
+	 * public List<Avaliacao> getAvaliacoes() { return avaliacoes; }
+	 * 
+	 * public void setAvaliacoes(List<Avaliacao> avaliacoes) { this.avaliacoes =
+	 * avaliacoes; }
+	 */
 
-	public void setAvaliacoes(List<Avaliacao> avaliacoes) {
-		this.avaliacoes = avaliacoes;
-	}
-
-	public List<Livro> getLivros() {
-		return livros;
-	}
-
-	public void setLivros(List<Livro> livros) {
-		this.livros = livros;
-	}
+	/*
+	 * public List<Livro> getLivros() { return livros; }
+	 * 
+	 * public void setLivros(List<Livro> livros) { this.livros = livros; }
+	 */
 	
 	@Override
 	public int hashCode() {

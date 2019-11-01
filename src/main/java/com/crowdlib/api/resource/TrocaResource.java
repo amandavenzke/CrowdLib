@@ -61,7 +61,10 @@ public class TrocaResource {
 		troca.setUsuarioSolicitado(usuarioSolicitado);
 
 		Troca trocaSalva = trocaRepository.save(troca);
-
+		
+		troca.setUsuarioSolicitante(null);
+		troca.setUsuarioSolicitado(null);
+		
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, trocaSalva.getId()));
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(trocaSalva);

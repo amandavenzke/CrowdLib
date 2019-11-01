@@ -78,6 +78,8 @@ public class LivroResource {
 		
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, livroSalvo.getId()));
 
+		//livroSalvo.setUsuario(null);
+		
 		return ResponseEntity.status(HttpStatus.CREATED).body(livroSalvo);
 	}
 
