@@ -56,15 +56,15 @@ public class TrocaResource {
 
 		Usuario usuarioSolicitado = this.usuarioRepository.findById(troca.getUsuarioSolicitado().getId())
 				.orElseThrow(() -> new EmptyResultDataAccessException(1));
-		
+
 		troca.setUsuarioSolicitante(usuarioSolicitante);
 		troca.setUsuarioSolicitado(usuarioSolicitado);
 
 		Troca trocaSalva = trocaRepository.save(troca);
-		
+
 		troca.setUsuarioSolicitante(null);
 		troca.setUsuarioSolicitado(null);
-		
+
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, trocaSalva.getId()));
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(trocaSalva);
@@ -73,6 +73,18 @@ public class TrocaResource {
 	@GetMapping("/{id}")
 	public ResponseEntity buscarPeloId(@Valid @PathVariable Long id) {
 		Optional troca = this.trocaRepository.findById(id);
+		return troca.isPresent() ? ResponseEntity.ok(troca.get()) : ResponseEntity.notFound().build();
+	}
+
+	@GetMapping("/usuarioSolicitante/{usuarioSolicitante}")
+	public ResponseEntity buscarPeloUsuarioSolicitante(@Valid @PathVariable Long usuarioSolicitante) {
+		Optional troca = this.trocaRepository.findByUsuarioSolicitanteId(usuarioSolicitante);
+		return troca.isPresent() ? ResponseEntity.ok(troca.get()) : ResponseEntity.notFound().build();
+	}
+
+	@GetMapping("/usuarioSolicitado/{usuarioSolicitado}")
+	public ResponseEntity buscarPeloUsuarioSolicitado(@Valid @PathVariable Long usuarioSolicitado) {
+		Optional troca = this.trocaRepository.findByUsuarioSolicitadoId(usuarioSolicitado);
 		return troca.isPresent() ? ResponseEntity.ok(troca.get()) : ResponseEntity.notFound().build();
 	}
 

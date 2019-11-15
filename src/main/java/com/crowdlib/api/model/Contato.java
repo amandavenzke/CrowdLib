@@ -1,6 +1,7 @@
 package com.crowdlib.api.model;
 
 import javax.persistence.Embeddable;
+import javax.persistence.Id;
 import javax.validation.constraints.Size;
 
 @Embeddable
@@ -11,6 +12,7 @@ public class Contato {
 	@Size(max = 15)
 	private String celular;
 
+	@Id
 	public String getEmail() {
 		return email;
 	}

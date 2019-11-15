@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS usuario (
-	id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
+	id BIGINT(20) AUTO_INCREMENT,
     nome VARCHAR(50) NOT NULL,
     sexo VARCHAR(10) NOT NULL,
     data_nascimento DATE NOT NULL,
@@ -12,7 +12,8 @@ CREATE TABLE IF NOT EXISTS usuario (
 	cidade VARCHAR(50),
 	estado VARCHAR(2),
 	cep VARCHAR(9),
-	celular VARCHAR(15)
+	celular VARCHAR(15) NOT NULL,
+	PRIMARY KEY (id, email)
 );
 
 CREATE TABLE IF NOT EXISTS avaliacao (
@@ -53,7 +54,7 @@ CREATE TABLE IF NOT EXISTS livro (
 
 CREATE TABLE IF NOT EXISTS troca (
 	id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
-	troca_realizada VARCHAR(1) NOT NULL,
+	troca_realizada VARCHAR(10) NOT NULL,
 	id_usuario_solicitante BIGINT(20) NOT NULL,
 	id_usuario_solicitado BIGINT(20) NOT NULL,
 	FOREIGN KEY (id_usuario_solicitante) REFERENCES usuario(id),
